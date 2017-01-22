@@ -1,8 +1,23 @@
 import { Engine } from 'engine/Engine';
-import {Canvas} from "./engine/Canvas";
+import { model as fModel } from './models/f';
+import { Mesh } from './engine/Mesh';
 
-//var engine = new Engine();
-var canvas = new Canvas();
+var engine = new Engine();
+
+
+for (var i = 0; i < 5; i++) {
+    var angle = i * Math.PI * 2 / 5;
+    var x = Math.cos(angle) * 200;
+    var y = Math.sin(angle) * 200;
+
+    engine.createObject(fModel, {x: x, y: 0, z: y});
+}
+
+engine.start();
+
+
+
+
 
 //canvas.draw();
 //var ctx = canvas.ctx;
@@ -18,7 +33,7 @@ var canvas = new Canvas();
 //engine.register(cube);
 //
 //var cube2 = new Cube(canvas, {
-//    dimensions: {w: 0.5, h: 0.5, d: 0.5},
+//    dimensions: {w: 0.5, h: 0.5, d    : 0.5},
 //    position: {x: 0.5, y: 0, z: -5},
 //    origin: {x: 0.5, y: 0.5, z: 0.5}
 //});

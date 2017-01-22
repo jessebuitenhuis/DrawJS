@@ -270,6 +270,14 @@ export var m4 = {
             (tmp_20 * m12 + tmp_23 * m22 + tmp_17 * m02))
         ];
     },
+    identity: function() : number[] {
+        return [
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        ];
+    },
 
     vectorMultiply: function(v, m) {
         var dst = [];
@@ -428,14 +436,7 @@ export var m4 = {
 //            b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33,
 //        ];
 //    },
-//    identity: function() : number[] {
-//        return [
-//            1, 0, 0, 0,
-//            0, 1, 0, 0,
-//            0, 0, 1, 0,
-//            0, 0, 0, 1
-//        ];
-//    },
+
 //    perspective: function(fieldOfViewInRadians: number, aspect: number, zNear: number, zFar: number) : number[] {
 //        var f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
 //        var rangeInv = 1.0 / (zNear - zFar);

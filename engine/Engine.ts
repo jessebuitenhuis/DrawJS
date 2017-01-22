@@ -3,6 +3,7 @@ import { Canvas } from "./Canvas";
 import { Camera } from './Camera';
 import { Control } from './Control';
 import { KEYS } from './constants';
+import {Model} from "./Model";
 
 export class Engine {
     private _gameObjects: Mesh[] = [];
@@ -13,6 +14,15 @@ export class Engine {
     constructor(){
         this._canvas = new Canvas();
         this._control = new Control();
+
+        var self = this;
+
+        var deregister = this._control.on(KEYS.UP, function(){
+            console.log('pressed keyup!');
+
+            self._control.on(KEYS.DOWN, deregister);
+        });
+
         //this._camera = new Camera(this._canvas, this._control);
     }
 
@@ -36,6 +46,7 @@ export class Engine {
 
     private _run() : void {
         if (this._running) {
+            this._control.excute();
             this._draw();
 
             requestAnimationFrame(this._run.bind(this));
@@ -43,11 +54,13 @@ export class Engine {
     }
 
     private _draw() : void {
-        //var self = this;
-        //this._canvas.clear();
+        this._gameObjects.forEach(function(gameObject){
+            gameObject.draw();
+        });
+    }
 
-        //this._gameObjects.forEach(function(gameObject){
-        //    self._canvas.draw(gameObject);
-        //})
+    public createObject(model: Model, translation?: {x: number, y: number, z: number}) {
+        var object = new Mesh(this._canvas, model, translation);
+        this.register(object);
     }
 }

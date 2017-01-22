@@ -1,14 +1,23 @@
-System.register(["./engine/Canvas"], function(exports_1) {
-    var Canvas_1;
-    var canvas;
+System.register(['engine/Engine', './models/f'], function(exports_1) {
+    var Engine_1, f_1;
+    var engine, i, angle, x, y;
     return {
         setters:[
-            function (Canvas_1_1) {
-                Canvas_1 = Canvas_1_1;
+            function (Engine_1_1) {
+                Engine_1 = Engine_1_1;
+            },
+            function (f_1_1) {
+                f_1 = f_1_1;
             }],
         execute: function() {
-            //var engine = new Engine();
-            canvas = new Canvas_1.Canvas();
+            engine = new Engine_1.Engine();
+            for (i = 0; i < 5; i++) {
+                angle = i * Math.PI * 2 / 5;
+                x = Math.cos(angle) * 200;
+                y = Math.sin(angle) * 200;
+                engine.createObject(f_1.model, { x: x, y: 0, z: y });
+            }
+            engine.start();
         }
     }
 });
@@ -24,7 +33,7 @@ System.register(["./engine/Canvas"], function(exports_1) {
 //engine.register(cube);
 //
 //var cube2 = new Cube(canvas, {
-//    dimensions: {w: 0.5, h: 0.5, d: 0.5},
+//    dimensions: {w: 0.5, h: 0.5, d    : 0.5},
 //    position: {x: 0.5, y: 0, z: -5},
 //    origin: {x: 0.5, y: 0.5, z: 0.5}
 //});

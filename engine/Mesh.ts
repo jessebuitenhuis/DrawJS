@@ -1,7 +1,82 @@
 import { m4 } from './m4';
+import { Model } from "./Model";
 import {Canvas} from "./Canvas";
 
 export class Mesh {
+    // WebGL
+    private _ctx : WebGLRenderingContext;
+    private _positionBuffer : WebGLBuffer;
+    private _colorBuffer : WebGLBuffer;
+    private _numItems : number;
+    private _itemLength : number;
+
+    constructor(private _canvas: Canvas,
+                private _model: Model,
+                private _position : {x: number, y: number, z: number} = {x:0, y: 0, z: 0}) {
+        this._ctx = _canvas.ctx;
+        this._itemLength = 3;
+        this._numItems = _model.positions && _model.positions.length / this._itemLength;
+
+        this._createBuffers();
+        this._setGeometry();
+        this._setColors();
+        this._setupPositionAttribute();
+        this._setupColorAttribute();
+    }
+
+    private _createBuffers() : void {
+        this._positionBuffer = this._ctx.createBuffer();
+        this._colorBuffer = this._ctx.createBuffer();
+    }
+
+    private _setGeometry() : void {
+        this._ctx.bindBuffer(this._ctx.ARRAY_BUFFER, this._positionBuffer);
+        this._ctx.bufferData(this._ctx.ARRAY_BUFFER, this._model.positions, this._ctx.STATIC_DRAW);
+    }
+
+    private _setColors() : void {
+        this._ctx.bindBuffer(this._ctx.ARRAY_BUFFER, this._colorBuffer);
+        this._ctx.bufferData(this._ctx.ARRAY_BUFFER, this._model.colors, this._ctx.STATIC_DRAW);
+    }
+
+    private _setupPositionAttribute() : void {
+        this._ctx.enableVertexAttribArray(this._canvas.positionLocation);
+        this._ctx.bindBuffer(this._ctx.ARRAY_BUFFER, this._positionBuffer);
+
+        var size = this._itemLength,
+            type = this._ctx.FLOAT,
+            normalize = false,
+            stride = 0,
+            offset = 0;
+
+        this._ctx.vertexAttribPointer(this._canvas.positionLocation, size, type, normalize, stride, offset);
+    }
+
+    private _setupColorAttribute() : void {
+        this._ctx.enableVertexAttribArray(this._canvas.colorLocation);
+        this._ctx.bindBuffer(this._ctx.ARRAY_BUFFER, this._colorBuffer);
+
+        var size = this._itemLength,
+            type = this._ctx.UNSIGNED_BYTE,
+            normalize = true,
+            stride = 0,
+            offset = 0;
+
+        this._ctx.vertexAttribPointer(this._canvas.colorLocation, size, type, normalize, stride, offset);
+    }
+
+    public draw() : void {
+        var matrix = m4.identity();
+        if (this._position) matrix = m4.translate(matrix, this._position.x, this._position.y, this._position.z);
+        this._ctx.uniformMatrix4fv(this._canvas._matrixLocation, false, new Float32Array(matrix));
+
+        var primitiveType = this._ctx.TRIANGLES;
+        var offset = 0;
+        this._ctx.drawArrays(primitiveType, offset, this._numItems);
+    }
+
+
+
     //protected _ctx: WebGLRenderingContext;
     //protected _program: WebGLProgram;
     //
@@ -19,7 +94,6 @@ export class Mesh {
     //protected _itemSize : number = 3;
     //protected _numItems : number;
     //protected _dimensions : {w: number, h: number, d: number};
-    //protected _position : {x: number, y: number, z: number} = {x:0, y: 0, z: 0};
     //protected _origin : {x: number, y?: number, z?: number} = {x: 0, y: 0, z: 0};
     //protected _rotation : {x?: number, y?: number, z?: number} = {x: 0, y: 0, z: 0};
     //protected _scale : {x?: number, y?: number, z?: number} = {x: 1, y: 1, z: 1};
