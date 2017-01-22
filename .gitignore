@@ -1,3 +1,5 @@
 
 node_modules
-engine/[!vendor]**/*.js
+**/*.js
+!engine/vendor/**/*.js
+.idea/workspace.xml
