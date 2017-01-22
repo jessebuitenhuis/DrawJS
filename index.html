@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DrawJS</title>
+    <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+
+<!--<script src="engine/vendor/sylvester-0-1-3/sylvester.js"></script>-->
+<!--<script src="engine/vendor/glUtils.js"></script>-->
+<script src="node_modules/systemjs/dist/system.js"></script>
+<script>
+    SystemJS.config({
+        "defaultJSExtensions": true
+    });
+    SystemJS.import('index.js');
+</script>
+</body>
+</html>
