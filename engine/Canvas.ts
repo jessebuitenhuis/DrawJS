@@ -111,7 +111,7 @@ export class Canvas {
         this._ctx.bufferData(this._ctx.ARRAY_BUFFER, f.colors, this._ctx.STATIC_DRAW);
     }
 
-    private _clear() : void {
+    public clear() : void {
         this._ctx.clearColor(
             this._backgroundColor[0],
             this._backgroundColor[1],
@@ -125,7 +125,7 @@ export class Canvas {
         this._setPositionF();
         this._computeCameraMatrix();
         this._computeViewProjectionMatrix();
-        this._clear();
+        this.clear();
         this._drawF();
     }
     private _setupPositionAttribute() : void {
