@@ -1,4 +1,4 @@
-System.register(['engine/Canvas'], function(exports_1) {
+System.register(["./engine/Canvas"], function(exports_1) {
     var Canvas_1;
     var canvas;
     return {
@@ -7,8 +7,8 @@ System.register(['engine/Canvas'], function(exports_1) {
                 Canvas_1 = Canvas_1_1;
             }],
         execute: function() {
+            //var engine = new Engine();
             canvas = new Canvas_1.Canvas();
-            canvas.draw();
         }
     }
 });

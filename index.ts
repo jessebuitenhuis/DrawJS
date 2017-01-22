@@ -1,11 +1,9 @@
-import { Canvas } from 'engine/Canvas';
 import { Engine } from 'engine/Engine';
-import { Triangle } from 'engine/meshes/Triangle';
-import { Plane } from 'engine/meshes/Plane';
-import { Cube } from 'engine/meshes/Cube';
+import {Canvas} from "./engine/Canvas";
 
+//var engine = new Engine();
 var canvas = new Canvas();
-canvas.draw();
+
 //canvas.draw();
 //var ctx = canvas.ctx;
 //var shader = canvas.shaderProgram;
